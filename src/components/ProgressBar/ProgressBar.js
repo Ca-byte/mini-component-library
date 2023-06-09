@@ -71,7 +71,7 @@ border-radius: 4px;
 const Bar = styled.div`
 width: var(--width);
 height: var(--height);
-background-color: ${COLORS.black};
+background-color: ${COLORS.primary};
 border-radius: 4px 0 0 4px;
 
 `;
