@@ -6,6 +6,23 @@ import { COLORS } from '../../constants';
 import Icon from '../Icon';
 import VisuallyHidden from '../VisuallyHidden';
 
+const STYLES = {
+  small: {
+    fontSize: 14,
+    iconSize: 16,
+    borderThickness: 1,
+    height: 24,
+    paddingLeft: 24,
+  },
+  large: {
+    fontSize: 18,
+    iconSize: 24,
+    borderThickness: 2,
+    height: 36,
+    paddingLeft: 36,
+  }
+}
+
 const IconInput = ({
   label,
   icon,
@@ -13,7 +30,68 @@ const IconInput = ({
   size,
   placeholder,
 }) => {
-  return 'TODO';
+  const styles = STYLES[size];
+  if(!styles) {
+    throw new Error(`Unkown size passed to IconInput: ${size}`)
+  }
+  return (
+
+    <Wrapper>
+      <VisuallyHidden style={{ '--size': styles.iconSize + 'px'}}>{label}</VisuallyHidden>
+      <IconWrapper>
+      <Icon id={icon} size={styles.iconSize} />
+      </IconWrapper>
+      <TextInput 
+      placeholder={placeholder} 
+      style={{
+        ' --width': width + "px", 
+        '--height': styles.height / 16  + 'rem', 
+        '--border-thickness': styles.borderThickness + 'px',
+        '--font-size': styles.fontSize / 16 + 'rem',
+        '--padding-left': styles.paddingLeft + 'px'
+        }}/>
+    </Wrapper>
+  )
 };
 
+const Wrapper = styled.label`
+  display: block; 
+  position: relative;
+  color: ${COLORS.gray700};
+
+  &:hover {
+    color: ${COLORS.black}
+  }
+
+`;
+
+const IconWrapper = styled.div`
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  margin: auto 0;
+  height: var(--size);
+   
+`;
+
+const TextInput = styled.input`
+  width: var(--width);
+  height: var(--height);
+  font-size: var(--font-size);
+  border: none;
+  border-bottom: var(--border-thickness) solid ${COLORS.black};
+  padding-left: var(--padding-left);
+  color: inherit;
+  font-weight: 700;
+  outline-offset: 2px;
+
+  &::placeholder {
+    font-weight: 400;
+    color: ${COLORS.gray500};
+
+  }
+
+`;
 export default IconInput;
+
+
